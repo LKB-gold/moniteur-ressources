@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moniteur de Ressources Système</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- EN-TÊTE -->
+    <header class="header">
+        <div class="header-gauche">
+            <h1><i class="fas fa-desktop"></i> Moniteur de Ressources</h1>
+            <p><i class="far fa-clock"></i> <span id="texte-date">Chargement...</span></p>
+        </div>
+        <div class="header-droite">
+            <div class="statut" id="statut-general">
+                <span class="point-vert"></span>
+                <i class="fas fa-shield-halved"></i>
+                <span>Système Normal</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section class="dashboard">
+
+        <!-- Carte RAM -->
+        <div class="carte-resume" id="card-ram">
+            <div class="carte-top">
+                <div class="carte-icone ram"><i class="fas fa-microchip"></i></div>
+                <div class="carte-info">
+                    <p class="carte-titre">Mémoire RAM</p>
+                    <h2 class="carte-valeur" id="ram-valeur">0%</h2>
+                </div>
+            </div>
+            <div class="mini-barre-fond">
+                <div class="mini-barre" id="mini-barre-ram"></div>
+            </div>
+            <div class="carte-details">
+                <span><i class="fas fa-database"></i> <span id="ram-utilise">Utilisé: 0 MB</span></span>
+                <span><i class="fas fa-hard-drive"></i> <span id="ram-total">Total: 0 MB</span></span>
+            </div>
+        </div>
+
+        <!-- Carte CPU -->
+        <div class="carte-resume" id="card-cpu">
+            <div class="carte-top">
+                <div class="carte-icone cpu"><i class="fas fa-bolt"></i></div>
+                <div class="carte-info">
+                    <p class="carte-titre">Processeur CPU</p>
+                    <h2 class="carte-valeur" id="cpu-valeur">0%</h2>
+                </div>
+            </div>
+            <div class="mini-barre-fond">
+                <div class="mini-barre cpu" id="mini-barre-cpu"></div>
+            </div>
+            <div class="carte-details">
+                <span><i class="fas fa-server"></i> <span id="cpu-coeurs">Coeurs: --</span></span>
+                <span><i class="fas fa-stopwatch"></i> <span id="cpu-temps">Actif: 0s</span></span>
+            </div>
+        </div>
+
+        <!-- Carte Mémoire Temps Réel -->
+        <div class="carte-resume" id="card-memoire">
+            <div class="carte-top">
+                <div class="carte-icone memoire"><i class="fas fa-memory"></i></div>
+                <div class="carte-info">
+                    <p class="carte-titre">Mémoire Temps Réel</p>
+                    <h2 class="carte-valeur" id="memoire-valeur">0%</h2>
+                </div>
+            </div>
+            <div class="mini-barre-fond">
+                <div class="mini-barre memoire" id="mini-barre-memoire"></div>
+            </div>
+            <div class="carte-details">
+                <span><i class="fas fa-microchip"></i> <span id="memoire-utilise">Utilisé: 0 MB</span></span>
+                <span><i class="fas fa-hard-drive"></i> <span id="memoire-total">Total: 0 MB</span></span>
+            </div>
+        </div>
+
+        <!-- Carte Débit Connexion -->
+        <div class="carte-resume" id="card-debit">
+            <div class="carte-top">
+                <div class="carte-icone debit"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="carte-info">
+                    <p class="carte-titre">Débit Connexion</p>
+                    <h2 class="carte-valeur" id="debit-valeur">0 Mbps</h2>
+                </div>
+            </div>
+            <div class="mini-barre-fond">
+                <div class="mini-barre debit" id="mini-barre-debit"></div>
+            </div>
+            <div class="carte-details">
+                <span><i class="fas fa-wifi"></i> <span id="debit-type">Type: --</span></span>
+                <span><i class="fas fa-signal"></i> <span id="debit-latence">Latence: --</span></span>
+            </div>
+        </div>
+
+        <!-- Carte Réseau -->
+        <div class="carte-resume" id="card-reseau">
+            <div class="carte-top">
+                <div class="carte-icone reseau"><i class="fas fa-network-wired"></i></div>
+                <div class="carte-info">
+                    <p class="carte-titre">Réseau</p>
+                    <h2 class="carte-valeur" id="reseau-valeur">--</h2>
+                </div>
+            </div>
+            <div class="mini-barre-fond">
+                <div class="mini-barre reseau" id="mini-barre-reseau"></div>
+            </div>
+            <div class="carte-details">
+                <span><i class="fas fa-globe"></i> <span id="reseau-statut">Statut: --</span></span>
+                <span><i class="fas fa-link"></i> <span id="reseau-info">Info: --</span></span>
+            </div>
+        </div>
+
+        <!-- Carte Performance -->
+        <div class="carte-resume" id="card-perf">
+            <div class="carte-top">
+                <div class="carte-icone perf"><i class="fas fa-gauge-high"></i></div>
+                <div class="carte-info">
+                    <p class="carte-titre">Performance</p>
+                    <h2 class="carte-valeur" id="perf-valeur">-- ms</h2>
+                </div>
+            </div>
+            <div class="mini-barre-fond">
+                <div class="mini-barre perf" id="mini-barre-perf"></div>
+            </div>
+            <div class="carte-details">
+                <span><i class="fas fa-download"></i> <span id="perf-charge">Chargement: --</span></span>
+                <span><i class="fas fa-file-code"></i> <span id="perf-ressources">Fichiers: --</span></span>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- GRAPHIQUES -->
+    <section class="section-graphiques">
+        <div class="graphique-carte">
+            <div class="graphique-header">
+                <h3><i class="fas fa-microchip"></i> Fluctuation RAM</h3>
+                <div class="graphique-badges">
+                    <span class="badge"><i class="fas fa-arrow-up"></i> <span id="badge-ram-max">Max: 0%</span></span>
+                    <span class="badge"><i class="fas fa-chart-line"></i> <span id="badge-ram-moy">Moy: 0%</span></span>
+                </div>
+            </div>
+            <div class="graphique-conteneur"><canvas id="graphique-ram"></canvas></div>
+        </div>
+        <div class="graphique-carte">
+            <div class="graphique-header">
+                <h3><i class="fas fa-bolt"></i> Fluctuation CPU</h3>
+                <div class="graphique-badges">
+                    <span class="badge cpu"><i class="fas fa-arrow-up"></i> <span id="badge-cpu-max">Max: 0%</span></span>
+                    <span class="badge cpu"><i class="fas fa-chart-line"></i> <span id="badge-cpu-moy">Moy: 0%</span></span>
+                </div>
+            </div>
+            <div class="graphique-conteneur"><canvas id="graphique-cpu"></canvas></div>
+        </div>
+        <div class="graphique-carte large">
+            <div class="graphique-header">
+                <h3><i class="fas fa-chart-area"></i> Vue Globale RAM + CPU</h3>
+                <div class="graphique-badges">
+                    <span class="badge"><i class="fas fa-microchip"></i> RAM</span>
+                    <span class="badge cpu"><i class="fas fa-bolt"></i> CPU</span>
+                </div>
+            </div>
+            <div class="graphique-conteneur"><canvas id="graphique-global"></canvas></div>
+        </div>
+        <div class="graphique-carte petit">
+            <div class="graphique-header"><h3><i class="fas fa-microchip"></i> RAM Temps Réel</h3></div>
+            <div class="graphique-conteneur donut"><canvas id="graphique-donut-ram"></canvas></div>
+            <p class="donut-label" id="donut-ram-label">0%</p>
+        </div>
+        <div class="graphique-carte petit">
+            <div class="graphique-header"><h3><i class="fas fa-bolt"></i> CPU Temps Réel</h3></div>
+            <div class="graphique-conteneur donut"><canvas id="graphique-donut-cpu"></canvas></div>
+            <p class="donut-label" id="donut-cpu-label">0%</p>
+        </div>
+    </section>
+
+    <!-- JOURNAL + CONTRÔLES -->
+    <section class="section-bas">
+        <div class="journal-carte">
+            <h3><i class="fas fa-clipboard-list"></i> Journal d'événements</h3>
+            <div id="journal"></div>
+        </div>
+        <div class="controles-carte">
+            <h3><i class="fas fa-sliders"></i> Contrôles</h3>
+            <div class="controles-boutons">
+                <button class="btn" id="btn-pause" onclick="togglePause()">
+                    <i class="fas fa-pause" id="icone-pause"></i>
+                    <span id="texte-pause">Pause</span>
+                </button>
+                <button class="btn btn-danger" onclick="resetDonnees()">
+                    <i class="fas fa-rotate-right"></i> Reset
+                </button>
+                <button class="btn btn-success" id="btn-sauvegarder" onclick="sauvegarderOuRediriger()">
+                    <i class="fas fa-save"></i> Sauvegarder
+                </button>
+                <button class="btn btn-profil" onclick="window.location.href='inscription.html'">
+                    <i class="fas fa-user-circle"></i> Mon Profil
+                </button>
+            </div>
+            <div class="controle-vitesse">
+                <label><i class="fas fa-clock-rotate-left"></i> Intervalle</label>
+                <select id="select-vitesse" onchange="changerVitesse()">
+                    <option value="1000">1 seconde</option>
+                    <option value="2000" selected>2 secondes</option>
+                    <option value="5000">5 secondes</option>
+                </select>
+            </div>
+            <div class="info-systeme">
+                <p><i class="fas fa-globe"></i> <span id="info-navigateur">--</span></p>
+                <p><i class="fas fa-laptop"></i> <span id="info-plateforme">--</span></p>
+                <p><i class="fas fa-link"></i> <span id="info-enligne">--</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MESSAGE INSCRIPTION -->
+    <div id="message-inscription" class="message-inscription">
+        <div class="message-contenu">
+            <i class="fas fa-user-shield"></i>
+            <div class="message-texte">
+                <h3>Sauvegardez vos données en temps réel !</h3>
+                <p>Inscrivez-vous pour enregistrer vos performances</p>
+            </div>
+            <button class="btn-inscription" onclick="window.location.href='inscription.html'">
+                <i class="fas fa-user-plus"></i> S'inscrire
+            </button>
+        </div>
+        <button class="message-fermer" onclick="fermerMessageInscription()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

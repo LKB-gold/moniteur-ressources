@@ -1,0 +1,571 @@
+/* ========== BASE ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bleu:     #00d4ff;
+    --orange:   #ff6b35;
+    --vert:     #00ff88;
+    --violet:   #a855f7;
+    --rouge:    #ff0055;
+    --fond:     #0a0a1a;
+    --carte:    #1a1a2e;
+    --bordure:  #1e3a5f;
+    --texte:    #e0e0e0;
+    --gris:     #888;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: var(--fond);
+    color: var(--texte);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* ========== CONTENEUR PRINCIPAL ========== */
+.auth-conteneur {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    min-height: 650px;
+    background: var(--carte);
+    border: 1px solid var(--bordure);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* ========== PANNEAU GAUCHE ========== */
+.auth-panneau-gauche {
+    flex: 1;
+    background: linear-gradient(135deg, #0f3460, #16213e, #1a1a2e);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Cercles décoratifs */
+.auth-panneau-gauche::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(0, 212, 255, 0.05);
+    top: -100px;
+    left: -100px;
+}
+
+.auth-panneau-gauche::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(0, 255, 136, 0.05);
+    bottom: -50px;
+    right: -50px;
+}
+
+.auth-decoration {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Logo animé */
+.auth-logo {
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 212, 255, 0.1);
+    border: 2px solid var(--bleu);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    font-size: 2.5rem;
+    color: var(--bleu);
+    animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+.auth-decoration h2 {
+    color: var(--bleu);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.auth-decoration p {
+    color: var(--gris);
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* Fonctionnalités */
+.auth-features {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border-left: 3px solid var(--bleu);
+    transition: transform 0.3s;
+}
+
+.feature-item:hover {
+    transform: translateX(5px);
+}
+
+.feature-item i {
+    color: var(--bleu);
+    font-size: 1rem;
+    min-width: 20px;
+    text-align: center;
+}
+
+.feature-item span {
+    color: #aaa;
+    font-size: 0.85rem;
+}
+
+/* ========== PANNEAU DROIT ========== */
+.auth-panneau-droit {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+/* ========== FORMULAIRES ========== */
+.auth-formulaire {
+    width: 100%;
+    max-width: 400px;
+    animation: fadeInForm 0.4s ease;
+}
+
+@keyframes fadeInForm {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+.auth-formulaire.cache {
+    display: none;
+}
+
+.auth-formulaire h1 {
+    color: var(--bleu);
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-formulaire h1 i {
+    font-size: 1.4rem;
+}
+
+.auth-sous-titre {
+    color: var(--gris);
+    font-size: 0.85rem;
+    margin-bottom: 25px;
+}
+
+/* ========== MESSAGES ========== */
+.auth-message {
+    display: none;
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.auth-message.erreur {
+    display: flex;
+    background: rgba(255, 0, 85, 0.1);
+    border: 1px solid rgba(255, 0, 85, 0.3);
+    color: #ff6688;
+}
+
+.auth-message.succes {
+    display: flex;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    color: #88ffcc;
+}
+
+/* ========== CHAMPS ========== */
+.champ-groupe {
+    margin-bottom: 18px;
+}
+
+.champ-groupe label {
+    display: block;
+    color: var(--gris);
+    font-size: 0.82rem;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.champ-groupe label i {
+    margin-right: 6px;
+    font-size: 0.75rem;
+}
+
+.champ-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.champ-input > i:first-child {
+    position: absolute;
+    left: 14px;
+    color: var(--gris);
+    font-size: 0.9rem;
+    z-index: 1;
+}
+
+.champ-input input {
+    width: 100%;
+    padding: 12px 15px 12px 42px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--bordure);
+    border-radius: 10px;
+    color: var(--texte);
+    font-size: 0.95rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.champ-input input:focus {
+    outline: none;
+    border-color: var(--bleu);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.15);
+}
+
+.champ-input input::placeholder {
+    color: #555;
+}
+
+/* Bouton œil (afficher/masquer mot de passe) */
+.btn-oeil {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--gris);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.btn-oeil:hover {
+    color: var(--bleu);
+}
+
+/* ========== FORCE MOT DE PASSE ========== */
+.mdp-force {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.mdp-barre {
+    height: 100%;
+    width: 0%;
+    border-radius: 2px;
+    transition: width 0.3s, background 0.3s;
+}
+
+.mdp-texte {
+    font-size: 0.75rem;
+    margin-top: 4px;
+    display: block;
+}
+
+/* ========== BOUTONS ========== */
+.btn-auth {
+    width: 100%;
+    padding: 13px;
+    background: linear-gradient(135deg, var(--bleu), #0080ff);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.btn-auth:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+}
+
+.btn-auth.btn-secondaire {
+    background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,128,255,0.1));
+    border: 1px solid var(--bleu);
+    color: var(--bleu);
+}
+
+.btn-auth.btn-secondaire:hover {
+    background: var(--bleu);
+    color: #000;
+}
+
+.btn-auth.btn-deconnexion {
+    background: linear-gradient(135deg, rgba(255,0,85,0.1), rgba(255,0,85,0.2));
+    border: 1px solid var(--rouge);
+    color: var(--rouge);
+}
+
+.btn-auth.btn-deconnexion:hover {
+    background: var(--rouge);
+    color: #fff;
+}
+
+/* ========== LIENS ========== */
+.auth-lien {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--gris);
+    font-size: 0.85rem;
+}
+
+.auth-lien a {
+    color: var(--bleu);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.auth-lien a:hover {
+    color: #fff;
+}
+
+/* ========== PROFIL ========== */
+.profil-carte {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid var(--bordure);
+    margin-bottom: 20px;
+}
+
+.profil-avatar {
+    font-size: 3.5rem;
+    color: var(--bleu);
+}
+
+.profil-infos h3 {
+    color: var(--bleu);
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.profil-infos p {
+    color: var(--gris);
+    font-size: 0.82rem;
+    margin-bottom: 3px;
+}
+
+/* ========== DONNÉES SYSTÈME ========== */
+.profil-section {
+    margin-bottom: 20px;
+}
+
+.profil-section h3 {
+    color: var(--bleu);
+    font-size: 1rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profil-donnees {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.donnee-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    border-left: 3px solid var(--bleu);
+}
+
+.donnee-item i {
+    color: var(--bleu);
+    font-size: 0.8rem;
+    min-width: 16px;
+    text-align: center;
+}
+
+.donnee-item span {
+    color: var(--gris);
+    font-size: 0.75rem;
+    flex: 1;
+}
+
+.donnee-item strong {
+    color: var(--texte);
+    font-size: 0.8rem;
+}
+
+/* ========== HISTORIQUE SAUVEGARDES ========== */
+#historique-sauvegardes {
+    max-height: 150px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sauvegarde-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    border-left: 3px solid var(--vert);
+}
+
+.sauvegarde-item .sauvegarde-date {
+    color: var(--gris);
+}
+
+.sauvegarde-item .sauvegarde-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.sauvegarde-item button {
+    background: none;
+    border: none;
+    color: var(--bleu);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+}
+
+.sauvegarde-item button:hover {
+    color: #fff;
+}
+
+.sauvegarde-item button.btn-supprimer {
+    color: var(--rouge);
+}
+
+/* ========== PROFIL ACTIONS ========== */
+.profil-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .auth-conteneur {
+        flex-direction: column;
+    }
+
+    .auth-panneau-gauche {
+        padding: 30px;
+        min-height: auto;
+    }
+
+    .auth-features {
+        display: none;
+    }
+
+    .profil-donnees {
+        grid-template-columns: 1fr;
+    }
+}
+/* ========== NOUVELLES CARTES ========== */
+/* Mémoire Temps Réel */
+#card-memoire-reelle .carte-icone {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+    border-color: rgba(100, 149, 237, 0.3);
+}
+
+#card-memoire-reelle .carte-valeur {
+    color: #6495ed; /* Bleu royal */
+}
+
+/* Débit Connexion */
+#card-debit .carte-icone {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(255, 215, 0, 0.1));
+    border-color: rgba(0, 255, 136, 0.3);
+}
+
+#card-debit .carte-valeur {
+    color: #00ff88; /* Vert fluo */
+}
+
+/* Animation des icônes */
+.carte-icone i {
+    animation: pulseIcon 2s infinite alternate;
+}
+
+@keyframes pulseIcon {
+    from { transform: scale(1); }
+    to   { transform: scale(1.1); }
+}
+
+/* Barres de progression spécifiques */
+#mini-barre-memoire-reelle {
+    background: linear-gradient(90deg, #6495ed, #00d4ff) !important;
+}
+
+#mini-barre-debit {
+    background: linear-gradient(90deg, #00ff88, #ffd700) !important;
+}
