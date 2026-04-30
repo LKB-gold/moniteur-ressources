@@ -200,37 +200,51 @@ function simulerCPU() {
 }
 
 
+
 // ================================================
-// MÉMOIRE TEMPS RÉEL
+// MÉMOIRE TEMPS RÉEL 
 // ================================================
 function mettreAJourMemoireReelle() {
+
+    // 1. Récupérer la VRAIE RAM du système
+    var totalGB = navigator.deviceMemory || 8; // Vraie RAM ou 8GB par défaut
+
+    // 2. Simuler les fluctuations
     var changement = (Math.random() * 8) - 4;
     valeurMemoireSimulee = valeurMemoireSimulee + changement + (tendanceMemoire * Math.random() * 2);
 
+    // 3. Changer de direction aléatoirement
     if (Math.random() < 0.12) tendanceMemoire = tendanceMemoire * -1;
+
+    // 4. Garder dans les limites
     if (valeurMemoireSimulee > 90) { valeurMemoireSimulee = 90; tendanceMemoire = -1; }
     if (valeurMemoireSimulee < 25) { valeurMemoireSimulee = 25; tendanceMemoire = 1; }
 
+    // 5. Simuler des pics
     if (Math.random() < 0.06) {
         valeurMemoireSimulee = valeurMemoireSimulee + Math.random() * 12;
         ajouterJournal('fa-memory', 'Pic mémoire système détecté', 'alerte');
     }
 
+    // 6. Simuler libération mémoire
     if (Math.random() < 0.04) {
         valeurMemoireSimulee = valeurMemoireSimulee - Math.random() * 10;
         ajouterJournal('fa-broom', 'Nettoyage mémoire système', 'succes');
     }
 
+    // 7. Calculer le pourcentage final
     var pourcentMemoire = Math.round(Math.max(15, Math.min(95, valeurMemoireSimulee)));
 
-    var totalGB = 16;
+    // 8. Calculer la mémoire utilisée
     var utiliseGB = (pourcentMemoire / 100 * totalGB).toFixed(1);
 
+    // 9. Afficher les valeurs
     document.getElementById('memoire-valeur').textContent = pourcentMemoire + '%';
     document.getElementById('memoire-utilise').textContent = 'Utilisé: ' + utiliseGB + ' GB';
     document.getElementById('memoire-total').textContent = 'Total: ' + totalGB + ' GB';
     document.getElementById('mini-barre-memoire').style.width = pourcentMemoire + '%';
 
+    // 10. Couleur selon le niveau
     var barre = document.getElementById('mini-barre-memoire');
     if (pourcentMemoire < 50) {
         barre.style.background = 'linear-gradient(90deg, #00ff88, #00d4ff)';
@@ -240,6 +254,7 @@ function mettreAJourMemoireReelle() {
         barre.style.background = 'linear-gradient(90deg, #ff0080, #ff0000)';
     }
 
+    // 11. Alerte si critique
     if (pourcentMemoire > 85) {
         ajouterJournal('fa-triangle-exclamation', 'Mémoire critique : ' + pourcentMemoire + '%', 'danger');
     }
